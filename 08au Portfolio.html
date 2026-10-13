@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08au / 38lie Studio — Minimalist Art & Roblox Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#09090b',
+                            dark: '#121215',
+                            card: '#18181b',
+                            border: '#27272a',
+                            muted: '#a1a1aa',
+                            white: '#fafafa',
+                            accent: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom scrollbar & glassmorphism refinement */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+
+        .glass-panel {
+            background: rgba(18, 18, 21, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(24, 24, 27, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-brand-black text-brand-white font-sans antialiased selection:bg-brand-white selection:text-brand-black min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-brand-border/60">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="group flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full border border-brand-white/20 bg-brand-dark flex items-center justify-center font-serif text-lg font-bold group-hover:border-brand-white transition-colors">
+                    08
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl tracking-wider font-semibold group-hover:text-glow transition-all">08au Studio</span>
+                    <span class="text-[10px] tracking-widest text-brand-muted uppercase font-mono">38lie Roblox</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm tracking-widest uppercase font-medium text-brand-muted">
+                <a href="#gallery" class="hover:text-brand-white transition-colors">Gallery</a>
+                <a href="#commissions" class="hover:text-brand-white transition-colors">Commissions</a>
+                <a href="#partnerships" class="hover:text-brand-white transition-colors">Partnerships</a>
+                <a href="#contact" class="hover:text-brand-white transition-colors">Contact</a>
+            </nav>
+
+            <!-- Admin & Status Bar -->
+            <div class="flex items-center gap-4">
+                <button id="adminToggleBtn" onclick="openAdminModal()" class="flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-full border border-brand-border text-brand-muted hover:text-brand-white hover:border-brand-white/40 transition-all">
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                    <span id="adminBtnText">Admin</span>
+                </button>
+                <div id="adminBadge" class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                    EDITING ACTIVE
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative pt-24 pb-20 px-6 border-b border-brand-border/40 overflow-hidden">
+            <div class="max-w-5xl mx-auto text-center space-y-8 relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-border bg-brand-dark/50 text-xs font-mono text-brand-muted">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Commissions Status: Open
+                </div>
+
+                <h1 id="bioTitle" class="font-serif text-5xl md:text-7xl font-normal tracking-tight leading-tight">
+                    Digital Artist & <br/>
+                    <span class="italic font-light opacity-90">Roblox UGC Creator</span>
+                </h1>
+
+                <p id="bioSub" class="text-brand-muted text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                    Crafting high-contrast visual aesthetics, bespoke 2D artwork, custom Roblox face textures, and immersive UGC items for groups and games.
+                </p>
+
+                <!-- Quick Action Badges -->
+                <div class="flex flex-wrap justify-center items-center gap-4 pt-4">
+                    <!-- Discord Copy Button -->
+                    <button onclick="copyDiscord()" class="group glass-card px-5 py-2.5 rounded-full flex items-center gap-3 hover:bg-brand-white hover:text-brand-black transition-all">
+                        <i data-lucide="message-square" class="w-4 h-4"></i>
+                        <span class="text-sm font-medium">Discord: <strong class="font-mono">08au</strong></span>
+                        <i data-lucide="copy" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100"></i>
+                    </button>
+
+                    <!-- Roblox Profile Link -->
+                    <a href="https://www.roblox.com/users/38lie/profile" target="_blank" rel="noopener" class="glass-card px-5 py-2.5 rounded-full flex items-center gap-3 hover:bg-brand-white hover:text-brand-black transition-all">
+                        <i data-lucide="box" class="w-4 h-4"></i>
+                        <span class="text-sm font-medium">Roblox Profile: <strong class="font-mono">38lie</strong></span>
+                        <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-60"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Subtle background grid aesthetic -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#27272a15_1px,transparent_1px),linear-gradient(to_bottom,#27272a15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+        </section>
+
+        <!-- Portfolio Gallery -->
+        <section id="gallery" class="max-w-7xl mx-auto px-6 py-24 border-b border-brand-border/40">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <h2 class="text-xs uppercase tracking-widest text-brand-muted font-mono mb-2">Selected Works</h2>
+                    <h3 class="font-serif text-3xl md:text-4xl">Portfolio Gallery</h3>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <button onclick="filterCategory('all')" class="cat-btn active px-4 py-2 rounded-full border border-brand-white bg-brand-white text-brand-black transition-all" data-cat="all">All</button>
+                    <button onclick="filterCategory('2d')" class="cat-btn px-4 py-2 rounded-full border border-brand-border text-brand-muted hover:border-brand-white hover:text-brand-white transition-all" data-cat="2d">2D Art</button>
+                    <button onclick="filterCategory('roblox')" class="cat-btn px-4 py-2 rounded-full border border-brand-border text-brand-muted hover:border-brand-white hover:text-brand-white transition-all" data-cat="roblox">Roblox UGC & Face</button>
+                </div>
+            </div>
+
+            <!-- Add Artwork Button (Admin Only) -->
+            <div id="adminGalleryActions" class="hidden mb-8">
+                <button onclick="openAddArtworkModal()" class="w-full py-4 border border-dashed border-brand-border rounded-xl text-brand-muted hover:text-brand-white hover:border-brand-white transition-all flex items-center justify-center gap-2 font-mono text-sm">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Add New Artwork Entry
+                </button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="galleryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Gallery items will be dynamically rendered via JS -->
+            </div>
+        </section>
+
+        <!-- Dual Commission Showcase Section -->
+        <section id="commissions" class="max-w-7xl mx-auto px-6 py-24 border-b border-brand-border/40">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <h2 class="text-xs uppercase tracking-widest text-brand-muted font-mono">Pricing & Services</h2>
+                <h3 class="font-serif text-3xl md:text-5xl">Commission Offerings</h3>
+                <p class="text-brand-muted text-sm font-light">Custom digital art creations & Roblox avatar asset commissions tailored to your aesthetic requirements.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- 2D Art Commissions Column -->
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between pb-4 border-b border-brand-border">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="palette" class="w-5 h-5 text-brand-white"></i>
+                            <h4 class="font-serif text-2xl">2D Art Commissions</h4>
+                        </div>
+                        <span class="text-xs font-mono text-brand-muted">Turnaround: 3-7 Days</span>
+                    </div>
+
+                    <div id="commissions2DList" class="space-y-4">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Roblox UGC & Face Commissions Column -->
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between pb-4 border-b border-brand-border">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="box" class="w-5 h-5 text-brand-white"></i>
+                            <h4 class="font-serif text-2xl">Roblox UGC & Face</h4>
+                        </div>
+                        <span class="text-xs font-mono text-brand-muted">Turnaround: 2-5 Days</span>
+                    </div>
+
+                    <div id="commissionsRobloxList" class="space-y-4">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partnerships & Collaborations -->
+        <section id="partnerships" class="max-w-7xl mx-auto px-6 py-24 border-b border-brand-border/40">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <h2 class="text-xs uppercase tracking-widest text-brand-muted font-mono mb-2">Collaborations</h2>
+                    <h3 class="font-serif text-3xl md:text-4xl">Partnered Groups & Games</h3>
+                </div>
+                <div id="adminPartnerActions" class="hidden">
+                    <button onclick="openAddPartnerModal()" class="px-4 py-2 border border-brand-border rounded-lg text-xs font-mono text-brand-muted hover:text-brand-white hover:border-brand-white transition-all flex items-center gap-2">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Partner
+                    </button>
+                </div>
+            </div>
+
+            <div id="partnersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- Contact & Order Section -->
+        <section id="contact" class="max-w-4xl mx-auto px-6 py-24 text-center space-y-8">
+            <h2 class="text-xs uppercase tracking-widest text-brand-muted font-mono">Inquiries & Booking</h2>
+            <h3 class="font-serif text-4xl md:text-5xl font-normal">Ready to collaborate?</h3>
+            <p class="text-brand-muted text-base font-light max-w-xl mx-auto">
+                For commission slots, group partnerships, or commercial inquiries, send a message directly on Discord or reach out via Roblox.
+            </p>
+
+            <div class="pt-6 flex flex-wrap justify-center gap-6">
+                <button onclick="copyDiscord()" class="px-8 py-4 bg-brand-white text-brand-black hover:bg-neutral-200 transition-all font-medium text-sm rounded-full flex items-center gap-3">
+                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                    <span>Contact via Discord (<strong class="font-mono">08au</strong>)</span>
+                </button>
+                <a href="https://www.roblox.com/users/38lie/profile" target="_blank" rel="noopener" class="px-8 py-4 glass-card hover:border-brand-white transition-all text-sm rounded-full flex items-center gap-3">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                    <span>Roblox Profile (38lie)</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-brand-border/60 py-10 px-6 text-xs text-brand-muted font-mono">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                © <span id="currentYear"></span> 08au / 38lie Studio. All rights reserved.
+            </div>
+            <div class="flex gap-6">
+                <a href="#gallery" class="hover:text-brand-white transition-colors">Gallery</a>
+                <a href="#commissions" class="hover:text-brand-white transition-colors">Commissions</a>
+                <a href="#partnerships" class="hover:text-brand-white transition-colors">Partnerships</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden flex-col justify-between p-6 md:p-10 transition-all">
+        <div class="flex justify-between items-center z-10">
+            <div>
+                <h4 id="lightboxTitle" class="font-serif text-xl md:text-2xl">Artwork Title</h4>
+                <p id="lightboxCategory" class="text-xs font-mono text-brand-muted uppercase">Category</p>
+            </div>
+            <button onclick="closeLightbox()" class="p-2 rounded-full border border-brand-border hover:border-brand-white text-brand-muted hover:text-brand-white transition-all">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div class="flex-grow flex items-center justify-center py-6 px-2 overflow-hidden">
+            <img id="lightboxImg" src="" alt="Artwork Preview" class="max-h-[75vh] max-w-full object-contain rounded-lg border border-brand-border shadow-2xl">
+        </div>
+        <div class="text-center z-10">
+            <p id="lightboxDesc" class="text-sm text-brand-muted font-light max-w-2xl mx-auto"></p>
+        </div>
+    </div>
+
+    <!-- Admin Passkey Login Modal -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-6">
+        <div class="glass-panel p-8 rounded-2xl w-full max-w-md border border-brand-border space-y-6">
+            <div class="flex justify-between items-center">
+                <h3 class="font-serif text-2xl">Owner Authentication</h3>
+                <button onclick="closeAdminModal()" class="text-brand-muted hover:text-brand-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <p class="text-xs font-mono text-brand-muted">Enter administrative key to enable live editing mode.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-mono text-brand-muted mb-2">Passkey</label>
+                    <input type="password" id="adminPasskeyInput" class="w-full bg-brand-dark border border-brand-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-white transition-colors" placeholder="Enter passkey">
+                </div>
+                <button onclick="verifyAdmin()" class="w-full py-3 bg-brand-white text-brand-black rounded-lg font-medium text-sm hover:bg-neutral-200 transition-colors">
+                    Unlock Studio Controls
+                </button>
+            </div>
+            <div id="adminExportImportArea" class="hidden pt-4 border-t border-brand-border space-y-3">
+                <p class="text-xs font-mono text-brand-muted">Data Backup & Restore</p>
+                <div class="flex gap-2">
+                    <button onclick="exportData()" class="flex-1 py-2 border border-brand-border rounded text-xs font-mono text-brand-muted hover:text-brand-white hover:border-brand-white transition-all">Export JSON</button>
+                    <label class="flex-1 py-2 border border-brand-border rounded text-xs font-mono text-brand-muted hover:text-brand-white hover:border-brand-white transition-all text-center cursor-pointer">
+                        Import JSON
+                        <input type="file" onchange="importData(event)" class="hidden" accept=".json">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Artwork Modal -->
+    <div id="artworkModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-6">
+        <div class="glass-panel p-8 rounded-2xl w-full max-w-lg border border-brand-border space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center">
+                <h3 class="font-serif text-2xl">Add / Edit Artwork</h3>
+                <button onclick="closeArtworkModal()" class="text-brand-muted hover:text-brand-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form id="artworkForm" onsubmit="saveArtwork(event)" class="space-y-4 text-xs font-mono">
+                <input type="hidden" id="artworkId">
+                <div>
+                    <label class="block text-brand-muted mb-1">Title</label>
+                    <input type="text" id="artTitle" required class="w-full bg-brand-dark border border-brand-border rounded px-3 py-2 text-sm focus:border-brand-white focus:outline-none text-brand-white">
+                </div>
+                <div>
+                    <label class="block text-brand-muted mb-1">Category</label>
+                    <select id="artCat" class="w-full bg-brand-dark border border-brand-border rounded px-3 py-2 text-sm focus:border-brand-white focus:outline-none text-brand-white">
+                        <option value="2d">2D Art</option>
+                        <option value="roblox">Roblox UGC & Face</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-brand-muted mb-1">Image Source (URL or Upload Image)</label>
+                    <input type="text" id="artImgUrl" placeholder="https://..." class="w-full bg-brand-dark border border-brand-border rounded px-3 py-2 text-sm focus:border-brand-white focus:outline-none text-brand-white mb-2">
+                    <input type="file" id="artImgFile" accept="image/*" onchange="handleImageUpload(event)" class="block w-full text-brand-muted file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-brand-border file:text-brand-white hover:file:bg-brand-white hover:file:text-brand-black transition-all">
+                </div>
+                <div>
+                    <label class="block text-brand-muted mb-1">Tags (Comma Separated)</label>
+                    <input type="text" id="artTags" placeholder="Portrait, Monochrome, Face Texture" class="w-full bg-brand-dark border border-brand-border rounded px-3 py-2 text-sm focus:border-brand-white focus:outline-none text-brand-white">
+                </div>
+                <div>
+                    <label class="block text-brand-muted mb-1">Description</label>
+                    <textarea id="artDesc" rows="3" class="w-full bg-brand-dark border border-brand-border rounded px-3 py-2 text-sm focus:border-brand-white focus:outline-none text-brand-white"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3 bg-brand-white text-brand-black rounded font-medium hover:bg-neutral-200 transition-colors">
+                    Save Artwork Entry
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 glass-card px-5 py-3 rounded-xl text-sm font-mono flex items-center gap-3 border border-brand-white/20 shadow-2xl translate-y-20 opacity-0 transition-all duration-300">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+        <span id="toastMsg">Action completed successfully</span>
+    </div>
+
+    <script>
+        // Initial Default Data
+        const defaultData = {
+            isAdmin: false,
+            artworks: [
+                {
+                    id: '1',
+                    title: 'Monochrome Veil',
+                    category: '2d',
+                    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80',
+                    tags: ['Portrait', 'Illustration', 'High Contrast'],
+                    description: 'A dark minimalist digital portrait studying shadows and contrast dynamics.'
+                },
+                {
+                    id: '2',
+                    title: 'Custom Roblox Face Texture',
+                    category: 'roblox',
+                    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80',
+                    tags: ['Roblox Face', 'Texture', 'Gothic Aesthetics'],
+                    description: 'Bespoke high-definition custom face texture created for Roblox avatar items.'
+                },
+                {
+                    id: '3',
+                    title: 'Ethereal Silhouette',
+                    category: '2d',
+                    image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1000&q=80',
+                    tags: ['Full Scene', '2D Art', 'Minimal'],
+                    description: 'Conceptual digital piece exploring atmospheric depth and dark aesthetics.'
+                },
+                {
+                    id: '4',
+                    title: 'Roblox Hair & Accessory Set',
+                    category: 'roblox',
+                    image: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1000&q=80',
+                    tags: ['Roblox UGC', '3D Asset', 'Modeled'],
+                    description: 'Clean low-poly Roblox avatar accessory set crafted for catalog publishing.'
+                }
+            ],
+            commissions2D: [
+                { id: 'c1', title: 'Headshot / Icon', price: '$15 - $25', status: 'Open', desc: 'Detailed black & white or high-contrast portrait icon for social media or avatars.' },
+                { id: 'c2', title: 'Half Body / Character', price: '$35 - $50', status: 'Open', desc: 'Waist-up character illustration with stylized lighting and clean line art.' },
+                { id: 'c3', title: 'Full Scene Illustration', price: '$75+', status: 'Limited', desc: 'Complete artwork with intricate background, multiple lighting layers, and character details.' }
+            ],
+            commissionsRoblox: [
+                { id: 'cr1', title: 'Custom Face Texture', price: '$10 - $20 / 1k Robux', status: 'Open', desc: 'Unique face texture map tailored for Roblox avatar faces or clothing lines.' },
+                { id: 'cr2', title: 'UGC Asset Concept & Modeling', price: '$25 - $45 / 2.5k Robux', status: 'Open', desc: '3D model & texture creation ready for Roblox UGC submission.' },
+                { id: 'cr3', title: 'Full Group Asset Bundle', price: 'Negotiable', status: 'Inquiry', desc: 'Comprehensive aesthetic package including group logos, clothing textures, and face sets.' }
+            ],
+            partnerships: [
+                { id: 'p1', name: 'Aesthetic Roblox Group', role: 'Lead UGC Modeler', link: 'https://www.roblox.com/groups/38lie', desc: 'Featured creator providing custom face textures and apparel for over 50k members.' },
+                { id: 'p2', name: 'Noir Interactive Studio', role: '2D Visual Designer', link: 'https://www.roblox.com/users/38lie/profile', desc: 'Co-collaborator on dark-themed Roblox game visual design and artwork.' }
+            ]
+        };
+
+        // State Management
+        let appState = JSON.parse(localStorage.getItem('08au_portfolio_data')) || defaultData;
+        let currentFilter = 'all';
+
+        function saveData() {
+            localStorage.setItem('08au_portfolio_data', JSON.stringify(appState));
+        }
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('currentYear').innerText = new Date().getFullYear();
+            renderGallery();
+            renderCommissions();
+            renderPartnerships();
+            lucide.createIcons();
+        });
+
+        // Copy Discord Username
+        function copyDiscord() {
+            const textToCopy = '08au';
+            const tempInput = document.createElement('input');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast('Discord tag "08au" copied to clipboard!');
+        }
+
+        // Show Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Gallery Filter & Render
+        function filterCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.className = "cat-btn active px-4 py-2 rounded-full border border-brand-white bg-brand-white text-brand-black transition-all";
+                } else {
+                    btn.className = "cat-btn px-4 py-2 rounded-full border border-brand-border text-brand-muted hover:border-brand-white hover:text-brand-white transition-all";
+                }
+            });
+            renderGallery();
+        }
+
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+
+            const filtered = currentFilter === 'all' 
+                ? appState.artworks 
+                : appState.artworks.filter(item => item.category === currentFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-brand-muted font-mono py-12">No artwork entries found in this category.</p>`;
+                return;
+            }
+
+            filtered.forEach(art => {
+                const card = document.createElement('div');
+                card.className = "glass-card rounded-2xl overflow-hidden group cursor-pointer flex flex-col justify-between";
+                card.innerHTML = `
+                    <div class="relative overflow-hidden aspect-[4/3] bg-brand-dark" onclick="openLightbox('${art.id}')">
+                        <img src="${art.image}" alt="${art.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" onerror="this.src='https://placehold.co/800x600/18181b/fafafa?text=Artwork+Image'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-60"></div>
+                        <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-mono uppercase bg-black/60 border border-white/10 text-brand-muted">
+                            ${art.category === '2d' ? '2D Art' : 'Roblox UGC'}
+                        </span>
+                    </div>
+                    <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-serif text-xl group-hover:text-glow transition-all">${art.title}</h4>
+                            <p class="text-xs text-brand-muted font-light mt-1 line-clamp-2">${art.description || ''}</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            ${art.tags.map(t => `<span class="text-[10px] font-mono text-brand-muted bg-brand-dark border border-brand-border px-2 py-0.5 rounded">${t}</span>`).join('')}
+                        </div>
+                        ${appState.isAdmin ? `
+                            <div class="pt-4 flex gap-2 border-t border-brand-border/60">
+                                <button onclick="editArtwork('${art.id}', event)" class="text-xs font-mono text-brand-muted hover:text-brand-white">Edit</button>
+                                <button onclick="deleteArtwork('${art.id}', event)" class="text-xs font-mono text-red-400 hover:text-red-300">Delete</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Commission Sections
+        function renderCommissions() {
+            const list2D = document.getElementById('commissions2DList');
+            const listRoblox = document.getElementById('commissionsRobloxList');
+
+            list2D.innerHTML = appState.commissions2D.map(item => `
+                <div class="glass-card p-6 rounded-xl space-y-2 border border-brand-border/60">
+                    <div class="flex justify-between items-start">
+                        <h5 class="font-serif text-lg">${item.title}</h5>
+                        <span class="font-mono text-sm font-semibold">${item.price}</span>
+                    </div>
+                    <p class="text-xs text-brand-muted font-light">${item.desc}</p>
+                    <div class="pt-2 flex justify-between items-center text-[10px] font-mono">
+                        <span class="text-emerald-400 uppercase tracking-wider">● ${item.status}</span>
+                        <a href="#contact" class="text-brand-white hover:underline">Book Slot →</a>
+                    </div>
+                </div>
+            `).join('');
+
+            listRoblox.innerHTML = appState.commissionsRoblox.map(item => `
+                <div class="glass-card p-6 rounded-xl space-y-2 border border-brand-border/60">
+                    <div class="flex justify-between items-start">
+                        <h5 class="font-serif text-lg">${item.title}</h5>
+                        <span class="font-mono text-sm font-semibold">${item.price}</span>
+                    </div>
+                    <p class="text-xs text-brand-muted font-light">${item.desc}</p>
+                    <div class="pt-2 flex justify-between items-center text-[10px] font-mono">
+                        <span class="text-emerald-400 uppercase tracking-wider">● ${item.status}</span>
+                        <a href="#contact" class="text-brand-white hover:underline">Book Slot →</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Partnerships
+        function renderPartnerships() {
+            const grid = document.getElementById('partnersGrid');
+            grid.innerHTML = appState.partnerships.map(p => `
+                <a href="${p.link}" target="_blank" rel="noopener" class="glass-card p-6 rounded-xl block space-y-3 group hover:border-brand-white transition-all">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-serif text-lg group-hover:text-glow">${p.name}</h4>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4 text-brand-muted group-hover:text-brand-white transition-colors"></i>
+                    </div>
+                    <span class="inline-block text-[10px] font-mono text-brand-muted bg-brand-dark px-2 py-0.5 rounded border border-brand-border">${p.role}</span>
+                    <p class="text-xs text-brand-muted font-light leading-relaxed">${p.desc}</p>
+                </a>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Lightbox Functions
+        function openLightbox(id) {
+            const art = appState.artworks.find(a => a.id === id);
+            if (!art) return;
+            document.getElementById('lightboxTitle').innerText = art.title;
+            document.getElementById('lightboxCategory').innerText = art.category === '2d' ? '2D Artwork' : 'Roblox UGC Asset';
+            document.getElementById('lightboxImg').src = art.image;
+            document.getElementById('lightboxDesc').innerText = art.description || '';
+            document.getElementById('lightboxModal').classList.remove('hidden');
+            document.getElementById('lightboxModal').classList.add('flex');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+            document.getElementById('lightboxModal').classList.remove('flex');
+        }
+
+        // Admin Authentication
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function verifyAdmin() {
+            const passkey = document.getElementById('adminPasskeyInput').value;
+            if (passkey === '08au') {
+                appState.isAdmin = true;
+                saveData();
+                updateAdminUI();
+                closeAdminModal();
+                showToast('Admin mode enabled!');
+            } else {
+                showToast('Invalid passkey key!');
+            }
+        }
+
+        function updateAdminUI() {
+            if (appState.isAdmin) {
+                document.getElementById('adminBadge').classList.remove('hidden');
+                document.getElementById('adminGalleryActions').classList.remove('hidden');
+                document.getElementById('adminPartnerActions').classList.remove('hidden');
+                document.getElementById('adminExportImportArea').classList.remove('hidden');
+                document.getElementById('adminBtnText').innerText = 'Admin Active';
+            }
+            renderGallery();
+        }
+
+        // Artwork Modal & Data Operations
+        let tempBase64Image = '';
+
+        function openAddArtworkModal() {
+            document.getElementById('artworkForm').reset();
+            document.getElementById('artworkId').value = '';
+            tempBase64Image = '';
+            document.getElementById('artworkModal').classList.remove('hidden');
+        }
+
+        function closeArtworkModal() {
+            document.getElementById('artworkModal').classList.add('hidden');
+        }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    tempBase64Image = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveArtwork(e) {
+            e.preventDefault();
+            const id = document.getElementById('artworkId').value || Date.now().toString();
+            const title = document.getElementById('artTitle').value;
+            const category = document.getElementById('artCat').value;
+            const imageUrl = tempBase64Image || document.getElementById('artImgUrl').value || 'https://placehold.co/800x600/18181b/fafafa?text=Artwork+Image';
+            const tags = document.getElementById('artTags').value.split(',').map(t => t.trim()).filter(t => t);
+            const description = document.getElementById('artDesc').value;
+
+            const existingIndex = appState.artworks.findIndex(a => a.id === id);
+            const artworkData = { id, title, category, image: imageUrl, tags, description };
+
+            if (existingIndex > -1) {
+                appState.artworks[existingIndex] = artworkData;
+            } else {
+                appState.artworks.unshift(artworkData);
+            }
+
+            saveData();
+            renderGallery();
+            closeArtworkModal();
+            showToast('Artwork saved successfully!');
+        }
+
+        function editArtwork(id, e) {
+            e.stopPropagation();
+            const art = appState.artworks.find(a => a.id === id);
+            if (!art) return;
+            document.getElementById('artworkId').value = art.id;
+            document.getElementById('artTitle').value = art.title;
+            document.getElementById('artCat').value = art.category;
+            document.getElementById('artImgUrl').value = art.image;
+            document.getElementById('artTags').value = art.tags.join(', ');
+            document.getElementById('artDesc').value = art.description || '';
+            document.getElementById('artworkModal').classList.remove('hidden');
+        }
+
+        function deleteArtwork(id, e) {
+            e.stopPropagation();
+            appState.artworks = appState.artworks.filter(a => a.id !== id);
+            saveData();
+            renderGallery();
+            showToast('Artwork removed');
+        }
+
+        // Export/Import JSON Data
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "08au_portfolio_data.json");
+            dlAnchorElem.click();
+        }
+
+        function importData(event) {
+            const fileReader = new FileReader();
+            fileReader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    appState = parsed;
+                    saveData();
+                    renderGallery();
+                    renderCommissions();
+                    renderPartnerships();
+                    showToast('Data imported successfully!');
+                } catch (err) {
+                    showToast('Failed to import JSON!');
+                }
+            };
+            fileReader.readAsText(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
